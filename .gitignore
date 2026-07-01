@@ -1,0 +1,36 @@
+# === Secretos / entorno (NUNCA se versionan — docs/10-seguridad.md §8) ===
+*.env
+env.json
+dart_define*.json
+.env.local
+supabase/.temp/
+supabase/.branches/
+
+# === Flutter (respaldo; app/.gitignore es el principal) ===
+app/.dart_tool/
+app/build/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/pubspec.lock
+
+# === Node (CLI de Supabase instalada como dev dependency) ===
+node_modules/
+
+# === Código generado ===
+*.g.dart
+*.freezed.dart
+
+# === IDE / SO ===
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# === Temporales / residuos ===
+_scaffold_tmp/
+# SQL consolidado para aplicar el esquema a un proyecto hosted (helper local)
+supabase/_setup_hosted.sql
+# Proyecto Flutter duplicado/incompleto (el real es app/). Pendiente de confirmar
+# eliminación con el usuario — ver conversación T-016.
+itbrain/

@@ -1,0 +1,53 @@
+name: it_brain
+description: "IT Brain — El segundo cerebro del departamento de TI. Knowledge graph para equipos de TI."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Backend / Supabase (Auth, Postgres, Storage, RLS) ---
+  supabase_flutter: ^2.8.0
+
+  # --- Gestión de estado (decisión de stack: Riverpod) ---
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # --- Modelos inmutables / serialización ---
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # --- Navegación (soporta deep links itbrain://entity/{id} — ver docs 07 §6) ---
+  go_router: ^14.6.2
+
+  # --- Almacenamiento local seguro (offline cache — docs 13) ---
+  drift: ^2.22.0                 # SQLite tipado (offline set)
+  sqlite3_flutter_libs: ^0.5.26
+  flutter_secure_storage: ^9.2.2 # clave de cifrado en enclave seguro (Keychain/Keystore)
+  path_provider: ^2.1.5
+  path: ^1.9.0
+
+  # --- Utilidades ---
+  connectivity_plus: ^6.1.0      # detección de estado online/offline
+  intl: ^0.19.0                  # formato de fechas/relativos
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+  # --- Generadores de código ---
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.6.3
+  freezed: ^2.5.7
+  json_serializable: ^6.9.0
+  drift_dev: ^2.22.0
+
+flutter:
+  uses-material-design: true
+  # Assets y fuentes se añaden al implementar las pantallas (docs 08)

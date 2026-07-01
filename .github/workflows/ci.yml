@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # ===================================================================
+  # GATE DE SEGURIDAD NO NEGOCIABLE (docs/10-seguridad.md §5, D-21)
+  # Ningún despliegue debe ocurrir si este job falla: verifica que un
+  # tenant jamás puede acceder a los datos de otro (aislamiento por RLS).
+  # ===================================================================
+  tenant-isolation:
+    name: Aislamiento de tenant (RLS gate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Levantar stack local (aplica migraciones + seed)
+        run: supabase start
+
+      - name: Ejecutar tests de aislamiento (pgTAP)
+        run: supabase test db
+
+      - name: Apagar stack
+        if: always()
+        run: supabase stop
+
+  # ===================================================================
+  # Calidad del cliente Flutter
+  # ===================================================================
+  flutter:
+    name: Flutter (analyze + test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.4'
+          channel: stable
+
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
